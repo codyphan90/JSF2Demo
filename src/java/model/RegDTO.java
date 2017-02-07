@@ -170,13 +170,24 @@ public class RegDTO implements Serializable {
         }
         return false;
     }
-    public boolean inseartAccount() throws ClassNotFoundException, SQLException {
+    public boolean insertAccount() throws ClassNotFoundException, SQLException {
         try{
         connectDB();
-        
-        
+        String sql = "insert into Registration(username, password, lastname,isAdmin)"
+                + "values(?,?,?,?)";
+        stm = con.prepareStatement(sql);
+        stm.setString(1, username);
+        stm.setString(2, password);
+        stm.setString(3, lastname);
+        stm.setBoolean(4, roles);
+        int row = stm.executeUpdate();
+            System.out.println("Insert into DB");
+        if (row>0){
+            return true;
+        }
         } finally {
         closeConnDB();
+            System.out.println("Insert done");
         }
         return false;
 }

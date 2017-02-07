@@ -46,6 +46,7 @@
                         <h:outputText value="#{reg.roles}" rendered="#{not regSessionBean.editable}"/>
                         <h:selectBooleanCheckbox value="#{reg.roles}" rendered="#{regSessionBean.editable}" />
                     </h:column>
+                    <!--form edit account-->
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="Update"/>
@@ -59,8 +60,34 @@
                     </h:column>
                 </h:dataTable>
             </h:form>
+                <!--form create new account-->
+            <h:form>
+                <h:commandButton binding="#{regSessionBean.addCommand}"
+                                 action="#{regSessionBean.addNew}" value="Add New Account"/>
+            </h:form>
+                <h:form binding="#{regSessionBean.insertForm}" rendered="false">
+                    <h:outputLabel value="Username" for="username" accesskey="u"/>
+                    <h:inputText id="username" required="true"
+                                 value="#{regSessionBean.sUsername}" size="20"/>
+                    <h:message  for="username"/><br/>
+                    <h:outputLabel value="Password" for="password" accesskey="p"/>
+                    <h:inputSecret id="password" required="true"
+                                   value="#{regSessionBean.sPassword}" size="20"/>
+                    <h:message for="password"/><br/>
+                    <h:outputLabel value="Lastname" for="lastname" accesskey="l"/>
+                    <h:inputText id="lastname" required="true"
+                                 value="#{regSessionBean.sLastname}" size="40"/>
+                    <h:message for="lastname"/><br/>
+                    <h:outputLabel value="Admin" for="roles" accesskey="r"/>
+                    <h:selectBooleanCheckbox id="roles"
+                                             value="#{regSessionBean.bRoles}"/><br/>
+                    <h:commandButton binding="#{regSessionBean.insertCommand}"
+                                     action="#{regSessionBean.insertAccount()}"/>
+            </h:form>
+                <br>
             <c:if test="${empty regSessionBean.regSearch}">
                 No record is matched!
+                <br>
             </c:if>
                 <h:form>  <h:commandLink value="Back" action="#{regSessionBean.goHome}"/></h:form>
                 

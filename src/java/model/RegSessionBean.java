@@ -7,6 +7,8 @@
 package model;
 
 import java.sql.SQLException;
+import javax.faces.component.UICommand;
+import javax.faces.component.UIForm;
 import javax.faces.event.ActionEvent;
 
 /**
@@ -24,6 +26,16 @@ public class RegSessionBean {
     //bien update
     private boolean editable = false;
     private ActionEvent e;
+    //bien instert form
+    private UICommand addCommand;
+    private UICommand insertCommand;
+    private UIForm insertForm;
+    private String sUsername;
+    private String sPassword;
+    private String sLastname;
+    private boolean bRoles;
+    
+    
     
 
     public String getUsername() {
@@ -73,6 +85,62 @@ public class RegSessionBean {
     public void setE(ActionEvent e) {
         this.e = e;
     }
+
+    public UICommand getAddCommand() {
+        return addCommand;
+    }
+
+    public void setAddCommand(UICommand addCommand) {
+        this.addCommand = addCommand;
+    }
+
+    public UICommand getInsertCommand() {
+        return insertCommand;
+    }
+
+    public void setInsertCommand(UICommand insertCommand) {
+        this.insertCommand = insertCommand;
+    }
+
+    public UIForm getInsertForm() {
+        return insertForm;
+    }
+
+    public void setInsertForm(UIForm insertForm) {
+        this.insertForm = insertForm;
+    }
+
+    public String getsUsername() {
+        return sUsername;
+    }
+
+    public void setsUsername(String sUsername) {
+        this.sUsername = sUsername;
+    }
+
+    public String getsPassword() {
+        return sPassword;
+    }
+
+    public void setsPassword(String sPassword) {
+        this.sPassword = sPassword;
+    }
+
+    public String getsLastname() {
+        return sLastname;
+    }
+
+    public void setsLastname(String sLastname) {
+        this.sLastname = sLastname;
+    }
+
+    public boolean isbRoles() {
+        return bRoles;
+    }
+
+    public void setbRoles(boolean bRoles) {
+        this.bRoles = bRoles;
+    }
     
     
     public RegSessionBean() {
@@ -105,6 +173,7 @@ public class RegSessionBean {
         editable = true;
         return null;
     }
+    //Still error
     public void updateAccount(ActionEvent e) throws ClassNotFoundException, SQLException{
         System.out.println("Starting update account...");
         RegDTO tmp = (RegDTO) this.e.getComponent().getAttributes().get("reg");
@@ -117,6 +186,21 @@ public class RegSessionBean {
             searchLikeLastName();
         }
         System.out.println("Update done!");
+    }
+    //Insert methods
+    public void addNew(){
+        addCommand.setRendered(false);
+        insertForm.setRendered(true);
+        insertCommand.setValue("Insert");
+    }
+    public void insertAccount() throws ClassNotFoundException, SQLException {
+        RegDTO tmp = new RegDTO(sUsername, sPassword, sLastname, bRoles);
+        boolean result = tmp.insertAccount();
+        if (result){
+            insertForm.setRendered(false);
+            addCommand.setRendered(true);
+            searchLikeLastName();
+        }
     }
     
 }
