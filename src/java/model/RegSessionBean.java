@@ -17,8 +17,8 @@ import javax.faces.event.ActionEvent;
  */
 public class RegSessionBean {
     //bien login
-    private String username;
-    private String password;
+    private String lusername;
+    private String lpassword;
     
     //bien search
     private RegDTO[] regSearch;
@@ -34,24 +34,34 @@ public class RegSessionBean {
     private String sPassword;
     private String sLastname;
     private boolean bRoles;
+    //bien delete
+    private String dusername;
+
+    public String getDusername() {
+        return dusername;
+    }
+
+    public void setDusername(String dusername) {
+        this.dusername = dusername;
+    }
     
     
     
 
     public String getUsername() {
-        return username;
+        return lusername;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.lusername = username;
     }
 
     public String getPassword() {
-        return password;
+        return lpassword;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.lpassword = password;
     }
 
     public RegDTO[] getRegSearch() {
@@ -147,8 +157,8 @@ public class RegSessionBean {
     }
     // check login
     public String checkLogin() throws SQLException, ClassNotFoundException{
-        RegDTO dao = new RegDTO(username, password);
-        System.out.println("login with account: "+username);
+        RegDTO dao = new RegDTO(lusername, lpassword);
+        System.out.println("login with account: "+lusername);
         if (dao.checkLogin()) {
             return "success";
         }
@@ -199,6 +209,17 @@ public class RegSessionBean {
         if (result){
             insertForm.setRendered(false);
             addCommand.setRendered(true);
+            searchLikeLastName();
+        }
+    }
+    //delete method
+    public void deleteAccount(ActionEvent e) throws ClassNotFoundException, SQLException {
+        RegDTO dao = new RegDTO();
+        String sName =(String) e.getComponent().getAttributes().get("username");
+        System.out.println("sName = "+sName);
+        dao.setUsername(sName);
+        boolean result = dao.deleteAccount();
+        if (result){
             searchLikeLastName();
         }
     }

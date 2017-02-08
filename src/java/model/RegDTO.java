@@ -181,7 +181,7 @@ public class RegDTO implements Serializable {
         stm.setString(3, lastname);
         stm.setBoolean(4, roles);
         int row = stm.executeUpdate();
-            System.out.println("Insert into DB");
+            System.out.println("Inserting into DB...");
         if (row>0){
             return true;
         }
@@ -191,4 +191,23 @@ public class RegDTO implements Serializable {
         }
         return false;
 }
+    public boolean deleteAccount() throws ClassNotFoundException, SQLException{
+        try {
+            connectDB();
+            String sql = "Delete from Registration where username = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, username);
+            int row = stm.executeUpdate();
+            System.out.println("Deleting account in DB: "+username);
+            if (row>0){
+                
+                return true;
+            }
+        } 
+        finally {
+            closeConnDB();
+            System.out.println("Delete done");
+        }
+        return false;
+    }
 }

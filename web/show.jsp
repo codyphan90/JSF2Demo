@@ -55,42 +55,52 @@
                                        rendered="#{not regSessionBean.editable}" />
                         <h:commandLink value="Update" actionListener="#{regSessionBean.updateAccount}"
                                        rendered="#{regSessionBean.editable}">
-                        <f:attribute name="req" value="#{reg}"/>
+                            <f:attribute name="req" value="#{reg}"/>
                         </h:commandLink>
+                    </h:column>
+                    <!--form delete account-->
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Delete"/>
+                        </f:facet>
+                        <h:commandLink value="Delete" 
+                                       actionListener="#{regSessionBean.deleteAccount}">
+                            <f:attribute name="username" value="#{reg.username}" />
+                        </h:commandLink>      
                     </h:column>
                 </h:dataTable>
             </h:form>
-                <!--form create new account-->
+            <!--form create new account-->
             <h:form>
                 <h:commandButton binding="#{regSessionBean.addCommand}"
                                  action="#{regSessionBean.addNew}" value="Add New Account"/>
             </h:form>
-                <h:form binding="#{regSessionBean.insertForm}" rendered="false">
-                    <h:outputLabel value="Username" for="username" accesskey="u"/>
-                    <h:inputText id="username" required="true"
-                                 value="#{regSessionBean.sUsername}" size="20"/>
-                    <h:message  for="username"/><br/>
-                    <h:outputLabel value="Password" for="password" accesskey="p"/>
-                    <h:inputSecret id="password" required="true"
-                                   value="#{regSessionBean.sPassword}" size="20"/>
-                    <h:message for="password"/><br/>
-                    <h:outputLabel value="Lastname" for="lastname" accesskey="l"/>
-                    <h:inputText id="lastname" required="true"
-                                 value="#{regSessionBean.sLastname}" size="40"/>
-                    <h:message for="lastname"/><br/>
-                    <h:outputLabel value="Admin" for="roles" accesskey="r"/>
-                    <h:selectBooleanCheckbox id="roles"
-                                             value="#{regSessionBean.bRoles}"/><br/>
-                    <h:commandButton binding="#{regSessionBean.insertCommand}"
-                                     action="#{regSessionBean.insertAccount()}"/>
+            <h:form binding="#{regSessionBean.insertForm}" rendered="false">
+                <h:outputLabel value="Username" for="username" accesskey="u"/>
+                <h:inputText id="username" required="true"
+                             value="#{regSessionBean.sUsername}" size="20"/>
+                <h:message  for="username"/><br/>
+                <h:outputLabel value="Password" for="password" accesskey="p"/>
+                <h:inputSecret id="password" required="true"
+                               value="#{regSessionBean.sPassword}" size="20"/>
+                <h:message for="password"/><br/>
+                <h:outputLabel value="Lastname" for="lastname" accesskey="l"/>
+                <h:inputText id="lastname" required="true"
+                             value="#{regSessionBean.sLastname}" size="40"/>
+                <h:message for="lastname"/><br/>
+                <h:outputLabel value="Admin" for="roles" accesskey="r"/>
+                <h:selectBooleanCheckbox id="roles"
+                                         value="#{regSessionBean.bRoles}"/><br/>
+                <h:commandButton binding="#{regSessionBean.insertCommand}"
+                                 action="#{regSessionBean.insertAccount}"/>
             </h:form>
-                <br>
+            <br>
             <c:if test="${empty regSessionBean.regSearch}">
                 No record is matched!
                 <br>
             </c:if>
-                <h:form>  <h:commandLink value="Back" action="#{regSessionBean.goHome}"/></h:form>
-                
-        </body>
-    </html>
+            <h:form>  <h:commandLink value="Back" action="#{regSessionBean.goHome}"/></h:form>
+
+            </body>
+        </html>
 </f:view>
