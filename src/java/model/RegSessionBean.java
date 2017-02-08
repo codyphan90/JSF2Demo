@@ -25,7 +25,7 @@ public class RegSessionBean {
     private String searchValue;
     //bien update
     private boolean editable = false;
-    private ActionEvent e;
+    //private ActionEvent e;
     //bien instert form
     private UICommand addCommand;
     private UICommand insertCommand;
@@ -88,13 +88,13 @@ public class RegSessionBean {
         this.editable = editable;
     }
 
-    public ActionEvent getE() {
-        return e;
-    }
-
-    public void setE(ActionEvent e) {
-        this.e = e;
-    }
+//    public ActionEvent getE() {
+//        return e;
+//    }
+//
+//    public void setE(ActionEvent e) {
+//        this.e = e;
+//    }
 
     public UICommand getAddCommand() {
         return addCommand;
@@ -184,18 +184,42 @@ public class RegSessionBean {
         return null;
     }
     //Still error
+    private RegDTO accountEdit;
+
+    public RegDTO getAccountEdit() {
+        return accountEdit;
+    }
+
+    public void setAccountEdit(RegDTO accountEdit) {
+        this.accountEdit = accountEdit;
+    }
+    
     public void updateAccount(ActionEvent e) throws ClassNotFoundException, SQLException{
-        System.out.println("Starting update account...");
-        RegDTO tmp = (RegDTO) this.e.getComponent().getAttributes().get("reg");
-        
-        System.out.println(""+tmp.getUsername());
-        boolean result = tmp.updateAccount();
+        try {
+            RegDTO dao = new RegDTO();
+        System.out.println("Starting update account:");
+        //accountEdit = (RegDTO) e.getComponent().getAttributes().get("reg");
+        String test = (String) e.getComponent().getAttributes().get("username");
+        if (test == null){
+            System.out.println("accountEdit is null");
+        }
+        else{
+        System.out.println(test);
+        dao.setUsername(test);
+            System.out.println("lastname:"+dao.getLastname());
+            System.out.println("isadmin: "+dao.isRoles());
+        boolean result = dao.updateAccount();
         System.out.println("Update account: "+result);
+            
         if (result){
             editable = false;
             searchLikeLastName();
         }
         System.out.println("Update done!");
+        }
+        } catch(NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
     //Insert methods
     public void addNew(){

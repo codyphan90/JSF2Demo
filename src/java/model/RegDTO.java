@@ -154,7 +154,7 @@ public class RegDTO implements Serializable {
     public boolean updateAccount() throws ClassNotFoundException, SQLException{
         try{
         connectDB();
-        String sql ="Update Registrator set lastname = ?, isAdmin = ? where "
+        String sql ="Update Registration set lastname = ?, isAdmin = ? where "
                 + "username = ?";
         stm = con.prepareStatement(sql);
         stm.setString(1, lastname);
